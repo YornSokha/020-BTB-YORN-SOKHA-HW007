@@ -12,22 +12,61 @@ var rowColor = '#efcac4';
 
 var lastRow;
 
-
 formTableStudent.addEventListener('submit', (e) => {
     e.preventDefault();
     if (selectedRowId == -1) {
-        alert("Please select record to delete!");
+        let timerInterval
+        Swal.fire({
+            title: 'Please select to row to delete!',
+            // html: 'I will close in <strong></strong> seconds.',
+            timer: 1500,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                    Swal.getContent().querySelector('strong')
+                        .textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            onClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.timer
+            ) {
+                console.log('I was closed by the timer')
+            }
+        })
         return;
     }
-    let value = confirm("Do you want to delete record?");
-    console.log(value);
-    if (value) {
-        let currentRow = document.getElementById(selectedRowId);
-        currentRow.parentNode.removeChild(currentRow);
-        calculateTotalRecords();
-        selectedRowId = -1;
-    }
 
+    // let value = confirm("Do you want to delete record?");
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            // Delete row
+            let currentRow = document.getElementById(selectedRowId);
+            currentRow.parentNode.removeChild(currentRow);
+            calculateTotalRecords();
+            selectedRowId = -1;
+
+            Swal.fire(
+                'Deleted!',
+                'Record has been deleted.',
+                'success'
+            )
+
+        }
+    })
 })
 
 formInputStudent.addEventListener('submit', () => {
