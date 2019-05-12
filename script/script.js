@@ -10,11 +10,11 @@ var NumberOfRecords = 0;
 var selectedRowId = -1;
 var rowColor = '#efcac4';
 
-    var lastRow;
+var lastRow;
 
 
-formTableStudent.addEventListener('submit', () => {
-
+formTableStudent.addEventListener('submit', (e) => {
+    e.preventDefault();
     if (selectedRowId == -1) {
         alert("Please select record to delete!");
         return;
@@ -50,19 +50,13 @@ formInputStudent.addEventListener('submit', () => {
         var newText = document.createTextNode(arrStudent[i]);
         newCell.appendChild(newText);
     }
-    
+
     var createClickHandler = (row) => {
         return _ => {
-            // if(selectedRowId != -1){
-                // tableStudent.classList.remove('table-striped');
-                // let rows = tableStudentBody.getElementsByTagName('tr');
-                // rows.style.backgroundColor = rowColor;
-                // tableStudent.className += ' table-striped';
-            // }
             selectedRowId = row.id;
             console.log(lastRow);
-            
-            if(lastRow){
+
+            if (lastRow) {
                 lastRow.style.backgroundColor = '';
             }
             row.style.backgroundColor = rowColor;
@@ -76,25 +70,19 @@ formInputStudent.addEventListener('submit', () => {
 
 })
 
-
-
-function refreshTable(){
-    tableStudent.removeClass(' table-striped');
-}
-
 function formatInput() {
-    
-    if (phoneInput != '')
-        new Formatter(phoneInput, {
-            'pattern': '(+855) {{19}}-{{999}}-{{9999}}',
-            'persistent': false
-        });
 
-    if (studentName)
-        new Formatter(studentName, {
-            'pattern': '{{aaaaaaaaaaaaaaaaaaaaaaaa}}',
-            'persistent': false
-        });
+
+    new Formatter(phoneInput, {
+        'pattern': '(+855) {{19}}-{{999}}-{{9999}}',
+        'persistent': false
+    });
+
+
+    new Formatter(studentName, {
+        'pattern': '{{aaaaaaaaaaaaaaaaaaaaaaaa}}',
+        'persistent': false
+    });
 
 
     new Formatter(schoolInput, {
