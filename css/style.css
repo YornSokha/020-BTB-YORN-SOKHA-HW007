@@ -2,8 +2,8 @@
     margin-top: 2rem;
 }
 
-card-header-text {
-    font-size: 20rem;
+.card-header-text {
+    font-size: 3rem;
 }
 
 tr:hover td {
