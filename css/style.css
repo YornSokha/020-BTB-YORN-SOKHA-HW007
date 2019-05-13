@@ -41,7 +41,9 @@ td {
 }
 
 th {
-    background: #eee;
+    background: #0d3e51;
+    color: #ced4da;
+    font-size: 1rem;
 }
 
 select#select-gender {
@@ -53,4 +55,17 @@ select#select-gender {
 
 label.mdb-main-label {
     font-size: 0.8rem;
+}
+
+.custom-bg-blue {
+    background-color: #0d3e51d1;
+}
+
+.greyBlue {
+    color: #0d3e51d1;
+}
+
+label,
+i {
+    color: #0d3e51d1;
 }

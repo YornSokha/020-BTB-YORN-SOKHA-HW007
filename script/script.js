@@ -16,29 +16,6 @@ var lastRow;
 formTableStudent.addEventListener('submit', (e) => {
     e.preventDefault();
     if (selectedRowId == -1) {
-        let timerInterval
-        Swal.fire({
-            title: 'Please select to row to delete!',
-            // html: 'I will close in <strong></strong> seconds.',
-            timer: 1500,
-            onBeforeOpen: () => {
-                Swal.showLoading()
-                timerInterval = setInterval(() => {
-                    Swal.getContent().querySelector('strong')
-                        .textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            onClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then((result) => {
-            if (
-                // Read more about handling dismissals
-                result.dismiss === Swal.DismissReason.timer
-            ) {
-                console.log('I was closed by the timer')
-            }
-        })
         return;
     }
 
