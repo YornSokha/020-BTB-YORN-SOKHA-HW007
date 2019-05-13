@@ -1,6 +1,5 @@
 var formInputStudent = document.getElementById('form-student');
 var formTableStudent = document.getElementById('form-table-student');
-var tableStudentBody = document.getElementById("table-body-student");
 var tableStudent = document.getElementById('table-student');
 var phoneInput = document.getElementById('phone-input');
 var studentName = document.getElementById('name-input');
@@ -10,16 +9,14 @@ var genderSelect = document.getElementById('select-gender');
 var NumberOfRecords = 0;
 var selectedRowId = -1;
 var rowColor = '#efcac4';
-
 var lastRow;
+
 
 formTableStudent.addEventListener('submit', (e) => {
     e.preventDefault();
     if (selectedRowId == -1) {
         return;
     }
-
-    // let value = confirm("Do you want to delete record?");
 
     Swal.fire({
         title: 'Are you sure?',
@@ -67,7 +64,9 @@ const isValidInput = () => {
         );
         isValid = false
     }
-    if (phoneInput.value.length < 17) {
+    let phone = phoneInput.value;
+    let phonePattern = /[t]/gi;
+    if (phone.length < 17 || phonePattern.test(phone)) {
         $("#phone-input").notify(
             "Please input the correct phone number!", {
                 elementPosition: 'buttom right',
@@ -165,7 +164,7 @@ function formatInput() {
 }
 
 function calculateTotalRecords() {
-    var rows = tableStudentBody.getElementsByTagName("tr");
+    var rows = tableStudent.getElementsByTagName('tbody')[0].getElementsByTagName("tr");
     let numsOfRow = 0;
     for (i = 0; i < rows.length; i++) {
         numsOfRow++;
