@@ -5,6 +5,7 @@ var tableStudent = document.getElementById('table-student');
 var phoneInput = document.getElementById('phone-input');
 var studentName = document.getElementById('name-input');
 var schoolInput = document.getElementById('school-input');
+var genderSelect = document.getElementById('select-gender');
 
 var NumberOfRecords = 0;
 var selectedRowId = -1;
@@ -69,13 +70,58 @@ formTableStudent.addEventListener('submit', (e) => {
     })
 })
 
+const isValidInput = () => {
+    let isValid = true;
+    if (studentName.value == '') {
+        $("#name-input").notify(
+            "Please enter name!", {
+                elementPosition: "buttom right",
+                autoHideDelay: 1000,
+            }
+        );
+        isValid = false;
+    }
+    if (schoolInput.value == '') {
+        $("#school-input").notify(
+            "Please enter school's name!", {
+                elementPosition: "buttom right",
+                autoHideDelay: 1000,
+            }
+        );
+        isValid = false
+    }
+    if (phoneInput.value.length < 17) {
+        $("#phone-input").notify(
+            "Please input the correct phone number!", {
+                elementPosition: 'buttom right',
+                autoHideDelay: 1000,
+            }
+        );
+        isValid = false
+    }
+    if (isNaN(genderSelect.value)) {
+        $("#select-gender").notify(
+            "Please select a gender!", {
+                elementPosition: 'buttom right',
+                autoHideDelay: 1000,
+            }
+        );
+        isValid = false
+    }
+    return isValid;
+
+}
+
 formInputStudent.addEventListener('submit', () => {
+    if (!isValidInput())
+        return;
     let tbody = tableStudent.getElementsByTagName('tbody')[0];
     // console.log(tbody);
     let phone = phoneInput.value;
     let name = studentName.value;
     let school = schoolInput.value;
-    let gender = document.getElementById('select-gender').value;
+    let gender = genderSelect.value;
+    // console.log(phone.length);
 
     let arrStudent = [++NumberOfRecords, name, gender == 1 ? 'Female' : gender == 2 ? 'Male' : 'Other', school, phone];
     // Insert a row in the table at the last row
@@ -90,15 +136,26 @@ formInputStudent.addEventListener('submit', () => {
         newCell.appendChild(newText);
     }
 
+    $.notify("Record has been added successfully!", "success");
+
     var createClickHandler = (row) => {
         return _ => {
             selectedRowId = row.id;
             console.log(lastRow);
+            console.log(row);
 
             if (lastRow) {
                 lastRow.style.backgroundColor = '';
+                if (lastRow.id == row.id) {
+                    row.style.backgroundColor = '';
+                    selectedRowId = -1;
+                } else {
+                    row.style.backgroundColor = rowColor;
+                }
+            } else {
+                row.style.backgroundColor = rowColor;
             }
-            row.style.backgroundColor = rowColor;
+
             lastRow = row;
         };
     };

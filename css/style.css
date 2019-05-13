@@ -43,3 +43,14 @@ td {
 th {
     background: #eee;
 }
+
+select#select-gender {
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    border-radius: unset;
+    margin-top: -11px;
+}
+
+label.mdb-main-label {
+    font-size: 0.8rem;
+}
